@@ -15,7 +15,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var daemon bool
+var deamon bool
 
 // startCmd represents the start command
 var startCmd = &cobra.Command{
@@ -28,15 +28,18 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if daemon {
-			command := exec.Command("test", "start")
-			command.Start()
-			fmt.Printf("test start, [PID] %d running...\n", command.Process.Pid)
+		if deamon {
+			command := exec.Command("demo", "start")
+			err := command.Start()
+			if err != nil {
+				log.Printf("start error: %v\n", err)
+			}
+			fmt.Printf("demo start, [PID] %d running...\n", command.Process.Pid)
 			ioutil.WriteFile("/Users/scottxiong/go/src/github.com/scott-x/deamon-demo-go/cmd.lock", []byte(fmt.Sprintf("%d", command.Process.Pid)), 0666)
-			daemon = false
+			deamon = false
 			os.Exit(0)
 		} else {
-			fmt.Println("gonne start")
+			fmt.Println("demo start")
 		}
 
 		fmt.Println("server is running at: http://127.0.0.1:9006")
@@ -45,7 +48,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	startCmd.Flags().BoolVarP(&daemon, "deamon", "d", false, "is daemon?")
+	startCmd.Flags().BoolVarP(&deamon, "deamon", "d", false, "is deamon?")
 	rootCmd.AddCommand(startCmd)
 
 	// Here you will define your flags and configuration settings.

@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 		strb, _ := ioutil.ReadFile("/Users/scottxiong/go/src/github.com/scott-x/deamon-demo-go/cmd.lock")
 		command := exec.Command("kill", string(strb))
 		command.Start()
-		fmt.Println("test stoped")
+		fmt.Println("demo stoped")
 	},
 }
 
